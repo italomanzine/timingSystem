@@ -20,30 +20,12 @@
 #pragma config CP = OFF         // Flash Program Memory Code Protection bit (Code protection off)
 
 #include <xc.h> //include padrão do compilador XC8
-#include <pic16f877a.h> //include padrão do PIC16F877A
-#include <stdio.h> //include padrão de entradas e saídas da linguagem C
 
 #define _XTAL_FREQ 4000000 //Define a frequencia do clock em 4MHz
 
 #define START RB0
 #define LIGHT RC0
 #define BUZZER RC2
-
-void buzzer(void) 
-{
-    BUZZER = 1;
-    __delay_ms(200);
-    BUZZER = 0;
-}
-
-void light(void) 
-{
-    LIGHT = 1;
-    __delay_ms(150);
-    LIGHT = 0;
-}
-    
-
 
 void main(void) {
     //inicialização das portas todas em saída
