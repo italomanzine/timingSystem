@@ -7,15 +7,11 @@
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 13 "main.c"
-#pragma config FOSC = XT
+# 12 "main.c"
+#pragma config FOSC = HS
 #pragma config WDTE = ON
-#pragma config PWRTE = OFF
+#pragma config PWRTE = ON
 #pragma config BOREN = ON
-#pragma config LVP = ON
-#pragma config CPD = OFF
-#pragma config WRT = OFF
-#pragma config CP = OFF
 
 
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
@@ -1727,7 +1723,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 22 "main.c" 2
+# 17 "main.c" 2
 
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.35\\pic\\include\\c90\\stdio.h" 1 3
@@ -1827,53 +1823,232 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 #pragma printf_check(sprintf) const
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
-# 24 "main.c" 2
+# 19 "main.c" 2
+# 36 "main.c"
+# 1 "./lcd.h" 1
 
 
-
-
-
-
-
-
-void buzzer(void)
+void Lcd_Port(char a)
 {
-    RC2 = 1;
-    _delay((unsigned long)((200)*(4000000/4000.0)));
-    RC2 = 0;
+ if(a & 1)
+  RD4 = 1;
+ else
+  RD4 = 0;
+
+ if(a & 2)
+  RD5 = 1;
+ else
+  RD5 = 0;
+
+ if(a & 4)
+  RD6 = 1;
+ else
+  RD6 = 0;
+
+ if(a & 8)
+  RD7 = 1;
+ else
+  RD7 = 0;
+}
+void Lcd_Cmd(char a)
+{
+ RD2 = 0;
+ Lcd_Port(a);
+ RD3 = 1;
+        _delay((unsigned long)((4)*(20000000/4000.0)));
+        RD3 = 0;
 }
 
-void light(void)
+Lcd_Clear()
 {
-    RC0 = 1;
-    _delay((unsigned long)((150)*(4000000/4000.0)));
-    RC0 = 0;
+ Lcd_Cmd(0);
+ Lcd_Cmd(1);
 }
 
+void Lcd_Set_Cursor(char a, char b)
+{
+ char temp,z,y;
+ if(a == 1)
+ {
+   temp = 0x80 + b - 1;
+  z = temp>>4;
+  y = temp & 0x0F;
+  Lcd_Cmd(z);
+  Lcd_Cmd(y);
+ }
+ else if(a == 2)
+ {
+  temp = 0xC0 + b - 1;
+  z = temp>>4;
+  y = temp & 0x0F;
+  Lcd_Cmd(z);
+  Lcd_Cmd(y);
+ }
+}
+
+void Lcd_Init()
+{
+  Lcd_Port(0x00);
+   _delay((unsigned long)((20)*(20000000/4000.0)));
+  Lcd_Cmd(0x03);
+ _delay((unsigned long)((5)*(20000000/4000.0)));
+  Lcd_Cmd(0x03);
+ _delay((unsigned long)((11)*(20000000/4000.0)));
+  Lcd_Cmd(0x03);
+
+  Lcd_Cmd(0x02);
+  Lcd_Cmd(0x02);
+  Lcd_Cmd(0x08);
+  Lcd_Cmd(0x00);
+  Lcd_Cmd(0x0C);
+  Lcd_Cmd(0x00);
+  Lcd_Cmd(0x06);
+}
+
+void Lcd_Write_Char(char a)
+{
+   char temp,y;
+   temp = a&0x0F;
+   y = a&0xF0;
+   RD2 = 1;
+   Lcd_Port(y>>4);
+   RD3 = 1;
+   _delay((unsigned long)((40)*(20000000/4000000.0)));
+   RD3 = 0;
+   Lcd_Port(temp);
+   RD3 = 1;
+   _delay((unsigned long)((40)*(20000000/4000000.0)));
+   RD3 = 0;
+}
+
+void Lcd_Write_String(char *a)
+{
+ int i;
+ for(i=0;a[i]!='\0';i++)
+    Lcd_Write_Char(a[i]);
+}
+
+void Lcd_Shift_Right()
+{
+ Lcd_Cmd(0x01);
+ Lcd_Cmd(0x0C);
+}
+
+void Lcd_Shift_Left()
+{
+ Lcd_Cmd(0x01);
+ Lcd_Cmd(0x08);
+}
+# 36 "main.c" 2
 
 
-void main(void) {
+void setCronometro(void);
+void cronometro(void);
+void __attribute__((picinterrupt(("")))) contaSegundos(void);
 
-    TRISB = 0xFF;
-    TRISC = 0x00;
+__bit inverte;
+int minutos=0, segundos=0, centesimos=0, contador=0;
+char buffer[10];
+
+void main(void)
+{
+
+    TRISB = 0b11111111;
+    TRISC = 0b00000000;
+    TRISD = 0b00000000;
 
 
-    OPTION_REG = 0b01111111;
+    OPTION_REGbits.nRBPU = 0;
+
+
+
+    INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
+    PIE1bits.TMR1IE = 1;
+
+
+    T1CONbits.TMR1CS = 0;
+    T1CONbits.T1CKPS0 = 1;
+    T1CONbits.T1CKPS1 = 1;
+
+
+    TMR1L = 0x2C;
+    TMR1H = 0xCF;
+
+    T1CONbits.TMR1ON = 1;
+
 
     RC0 = 0;
     RC2 = 0;
+    RC3 = 0;
 
-    while (1)
+    Lcd_Init();
+
+
+    while(1)
     {
         if (RB0 == 0)
         {
             RC0 = 1;
             RC2 = 1;
-            _delay((unsigned long)((200)*(4000000/4000.0)));
+
+            _delay((unsigned long)((150)*(20000000/4000.0)));
             RC0 = 0;
             RC2 = 0;
+            _delay((unsigned long)((1000)*(20000000/4000.0)));
+        }
+
+        setCronometro();
+    }
+    return;
+}
+
+
+void __attribute__((picinterrupt(("")))) ContaSegundos(void)
+{
+    if(TMR1IF)
+    {
+        PIR1bits.TMR1IF = 0;
+        TMR1L = 0x2C;
+        TMR1H = 0xCF;
+
+
+
+        cronometro();
+
+        contador++;
+        if(contador == 100)
+        {
+            cronometro();
+            inverte = ~inverte;
+            RC3 = inverte;
+            contador = 0;
         }
     }
-# 84 "main.c"
-    return;
+}
+
+void setCronometro(void)
+{
+    sprintf(buffer,"%02d:%02d:%02d", minutos, segundos, centesimos);
+    Lcd_Set_Cursor(1,5);
+    Lcd_Write_String(buffer);
+}
+
+void cronometro(void)
+{
+    centesimos++;
+
+    if(centesimos == 100)
+    {
+        centesimos = 0;
+        segundos++;
+
+        if(segundos == 60)
+        {
+           segundos = 0;
+           minutos++;
+
+           if(minutos == 60) minutos = 0;
+        }
+    }
 }
