@@ -66,9 +66,9 @@ void main(void)
     T1CONbits.T1CKPS0 = 1;  // Bit para configurar pre-escaler
     T1CONbits.T1CKPS1 = 1;  // Bit para configurar pre-escaler
     
-    // TMR1 recebe o valor 53026(65536 - 12500), que em Hexadecimal vale 0xCF2C
-    TMR1L = 0x2C;           // Carga inicial no contador (65536 - 12500)
-    TMR1H = 0xCF;           // 53026. Quando estourar contou 12500, passou 0.1s
+    // TMR1 recebe o valor 59285(65536 - 59285), que em Hexadecimal vale 0xE795
+    TMR1L = 0x95;           // Carga inicial no contador (65536 - 6250)
+    TMR1H = 0xE7;           // 59285. Quando estourar contou 6250, passou 0.1s
     
     T1CONbits.TMR1ON = 1;   // Liga o TIMER 1
     
@@ -82,6 +82,7 @@ void main(void)
     // loop principal
     while(1)
     {
+        CLRWDT();
         if (START == 0)
         {
             LIGHT = 1;
@@ -90,7 +91,7 @@ void main(void)
             __delay_ms(150);
             LIGHT = 0;
             BUZZER = 0;
-            __delay_ms(1000);
+            //__delay_ms(1000);
         }
         
         setCronometro();
@@ -104,8 +105,8 @@ void __interrupt() ContaSegundos(void)
     if(TMR1IF)
     {
         PIR1bits.TMR1IF = 0;    // Reseta o flag da interrupção
-        TMR1L = 0x2C;           // Reinicia a contagem com 53036
-        TMR1H = 0xCF;           // 
+        TMR1L = 0x95;           // Reinicia a contagem com 59285
+        TMR1H = 0xE7;           // 
         
         
         // Comandos para tratar a interrupção

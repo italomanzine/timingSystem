@@ -10,11 +10,11 @@
 ### Memory Usage ###
  Intel Hex-file ranges:
   0h - 5h		(dist/default/production\timingSystemSoft.X.production.hex)
-  8h - 9F9h		(dist/default/production\timingSystemSoft.X.production.hex)
+  8h - 9DDh		(dist/default/production\timingSystemSoft.X.production.hex)
   400Eh - 400Fh		(dist/default/production\timingSystemSoft.X.production.hex)
  Unused ranges:
   6h - 7h
-  9FAh - 400Dh
+  9DEh - 400Dh
 
 ### Hex Memory Map ###
  Legend:
@@ -180,8 +180,6 @@
 000009A0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 000009B0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 000009C0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-000009D0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-000009E0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-000009F0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- -- -- --
+000009D0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- --
 ----------------------------------------------------------
 00004000 | -- -- -- -- -- -- -- -- -- -- -- -- -- -- H1 H1

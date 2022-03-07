@@ -109,8 +109,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "2674
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 2674: extern volatile __bit RB0 __attribute__((address(0x30)));
 [v _RB0 `Vb ~T0 @X0 0 e@48 ]
-"38 main.c
-[; ;main.c: 38: void setCronometro(void);
+"40 main.c
+[; ;main.c: 40: void setCronometro(void);
 [v _setCronometro `(v ~T0 @X0 0 ef ]
 [t ~ __interrupt . k ]
 [t T2 __interrupt ]
@@ -128,8 +128,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "549
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 549: extern volatile PIR1bits_t PIR1bits __attribute__((address(0x00C)));
 [v _PIR1bits `VS20 ~T0 @X0 0 e@12 ]
-"39 main.c
-[; ;main.c: 39: void cronometro(void);
+"41 main.c
+[; ;main.c: 41: void cronometro(void);
 [v _cronometro `(v ~T0 @X0 0 ef ]
 "194 C:\Program Files\Microchip\xc8\v2.35\pic\include\c90\stdio.h
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
@@ -697,11 +697,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./lcd.h: 113: }
 [e :UE 119 ]
 }
-"42 main.c
-[; ;main.c: 42: __bit inverte;
+"44 main.c
+[; ;main.c: 44: __bit inverte;
 [v _inverte `b ~T0 @X0 1 e ]
-"43
-[; ;main.c: 43: int minutos=0, segundos=0, centesimos=0, contador=0;
+"45
+[; ;main.c: 45: int minutos=0, segundos=0, centesimos=0, contador=0;
 [v _minutos `i ~T0 @X0 1 e ]
 [i _minutos
 -> 0 `i
@@ -718,250 +718,250 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _contador
 -> 0 `i
 ]
-"44
-[; ;main.c: 44: char buffer[10];
+"46
+[; ;main.c: 46: char buffer[10];
 [v _buffer `uc ~T0 @X0 -> 10 `i e ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"46
-[; ;main.c: 46: void main(void)
+"48
+[; ;main.c: 48: void main(void)
 [v _main `(v ~T0 @X0 1 ef ]
-"47
-[; ;main.c: 47: {
+"49
+[; ;main.c: 49: {
 {
 [e :U _main ]
 [f ]
-"49
-[; ;main.c: 49:     TRISB = 0b11111111;
-[e = _TRISB -> -> 255 `i `uc ]
-"50
-[; ;main.c: 50:     TRISC = 0b00000000;
-[e = _TRISC -> -> 0 `i `uc ]
 "51
-[; ;main.c: 51:     TRISD = 0b00000000;
+[; ;main.c: 51:     TRISB = 0b11111111;
+[e = _TRISB -> -> 255 `i `uc ]
+"52
+[; ;main.c: 52:     TRISC = 0b00000000;
+[e = _TRISC -> -> 0 `i `uc ]
+"53
+[; ;main.c: 53:     TRISD = 0b00000000;
 [e = _TRISD -> -> 0 `i `uc ]
-"54
-[; ;main.c: 54:     OPTION_REGbits.nRBPU = 0;
+"56
+[; ;main.c: 56:     OPTION_REGbits.nRBPU = 0;
 [e = . . _OPTION_REGbits 0 5 -> -> 0 `i `uc ]
-"58
-[; ;main.c: 58:     INTCONbits.GIE = 1;
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-"59
-[; ;main.c: 59:     INTCONbits.PEIE = 1;
-[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
 "60
-[; ;main.c: 60:     PIE1bits.TMR1IE = 1;
+[; ;main.c: 60:     INTCONbits.GIE = 1;
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+"61
+[; ;main.c: 61:     INTCONbits.PEIE = 1;
+[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+"62
+[; ;main.c: 62:     PIE1bits.TMR1IE = 1;
 [e = . . _PIE1bits 0 0 -> -> 1 `i `uc ]
-"63
-[; ;main.c: 63:     T1CONbits.TMR1CS = 0;
-[e = . . _T1CONbits 0 1 -> -> 0 `i `uc ]
-"64
-[; ;main.c: 64:     T1CONbits.T1CKPS0 = 1;
-[e = . . _T1CONbits 1 3 -> -> 1 `i `uc ]
 "65
-[; ;main.c: 65:     T1CONbits.T1CKPS1 = 1;
+[; ;main.c: 65:     T1CONbits.TMR1CS = 0;
+[e = . . _T1CONbits 0 1 -> -> 0 `i `uc ]
+"66
+[; ;main.c: 66:     T1CONbits.T1CKPS0 = 1;
+[e = . . _T1CONbits 1 3 -> -> 1 `i `uc ]
+"67
+[; ;main.c: 67:     T1CONbits.T1CKPS1 = 1;
 [e = . . _T1CONbits 1 4 -> -> 1 `i `uc ]
-"68
-[; ;main.c: 68:     TMR1L = 0x2C;
-[e = _TMR1L -> -> 44 `i `uc ]
-"69
-[; ;main.c: 69:     TMR1H = 0xCF;
-[e = _TMR1H -> -> 207 `i `uc ]
+"70
+[; ;main.c: 70:     TMR1L = 0x95;
+[e = _TMR1L -> -> 149 `i `uc ]
 "71
-[; ;main.c: 71:     T1CONbits.TMR1ON = 1;
+[; ;main.c: 71:     TMR1H = 0xE7;
+[e = _TMR1H -> -> 231 `i `uc ]
+"73
+[; ;main.c: 73:     T1CONbits.TMR1ON = 1;
 [e = . . _T1CONbits 0 0 -> -> 1 `i `uc ]
-"74
-[; ;main.c: 74:     RC0 = 0;
-[e = _RC0 -> -> 0 `i `b ]
-"75
-[; ;main.c: 75:     RC2 = 0;
-[e = _RC2 -> -> 0 `i `b ]
 "76
-[; ;main.c: 76:     RC3 = 0;
-[e = _RC3 -> -> 0 `i `b ]
+[; ;main.c: 76:     RC0 = 0;
+[e = _RC0 -> -> 0 `i `b ]
+"77
+[; ;main.c: 77:     RC2 = 0;
+[e = _RC2 -> -> 0 `i `b ]
 "78
-[; ;main.c: 78:     Lcd_Init();
+[; ;main.c: 78:     RC3 = 0;
+[e = _RC3 -> -> 0 `i `b ]
+"80
+[; ;main.c: 80:     Lcd_Init();
 [e ( _Lcd_Init ..  ]
-"81
-[; ;main.c: 81:     while(1)
-[e :U 122 ]
-"82
-[; ;main.c: 82:     {
-{
 "83
-[; ;main.c: 83:         if (RB0 == 0)
-[e $ ! == -> _RB0 `i -> 0 `i 124  ]
+[; ;main.c: 83:     while(1)
+[e :U 122 ]
 "84
-[; ;main.c: 84:         {
+[; ;main.c: 84:     {
 {
 "85
-[; ;main.c: 85:             RC0 = 1;
-[e = _RC0 -> -> 1 `i `b ]
+[; ;main.c: 85:         __asm("clrwdt");
+[; <" clrwdt ;# ">
 "86
-[; ;main.c: 86:             RC2 = 1;
-[e = _RC2 -> -> 1 `i `b ]
+[; ;main.c: 86:         if (RB0 == 0)
+[e $ ! == -> _RB0 `i -> 0 `i 124  ]
+"87
+[; ;main.c: 87:         {
+{
 "88
-[; ;main.c: 88:             _delay((unsigned long)((150)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;main.c: 88:             RC0 = 1;
+[e = _RC0 -> -> 1 `i `b ]
 "89
-[; ;main.c: 89:             RC0 = 0;
-[e = _RC0 -> -> 0 `i `b ]
-"90
-[; ;main.c: 90:             RC2 = 0;
-[e = _RC2 -> -> 0 `i `b ]
+[; ;main.c: 89:             RC2 = 1;
+[e = _RC2 -> -> 1 `i `b ]
 "91
-[; ;main.c: 91:             _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;main.c: 91:             _delay((unsigned long)((150)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 150 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "92
-[; ;main.c: 92:         }
+[; ;main.c: 92:             RC0 = 0;
+[e = _RC0 -> -> 0 `i `b ]
+"93
+[; ;main.c: 93:             RC2 = 0;
+[e = _RC2 -> -> 0 `i `b ]
+"95
+[; ;main.c: 95:         }
 }
 [e :U 124 ]
-"94
-[; ;main.c: 94:         setCronometro();
+"97
+[; ;main.c: 97:         setCronometro();
 [e ( _setCronometro ..  ]
-"95
-[; ;main.c: 95:     }
+"98
+[; ;main.c: 98:     }
 }
 [e :U 121 ]
 [e $U 122  ]
 [e :U 123 ]
-"96
-[; ;main.c: 96:     return;
+"99
+[; ;main.c: 99:     return;
 [e $UE 120  ]
-"97
-[; ;main.c: 97: }
+"100
+[; ;main.c: 100: }
 [e :UE 120 ]
 }
 [v $root$_ContaSegundos `(v ~T0 @X0 0 e ]
-"100
-[; ;main.c: 100: void __attribute__((picinterrupt(("")))) ContaSegundos(void)
+"103
+[; ;main.c: 103: void __attribute__((picinterrupt(("")))) ContaSegundos(void)
 [v _ContaSegundos `(v ~T2 @X0 1 ef ]
-"101
-[; ;main.c: 101: {
+"104
+[; ;main.c: 104: {
 {
 [e :U _ContaSegundos ]
 [f ]
-"102
-[; ;main.c: 102:     if(TMR1IF)
-[e $ ! _TMR1IF 126  ]
-"103
-[; ;main.c: 103:     {
-{
-"104
-[; ;main.c: 104:         PIR1bits.TMR1IF = 0;
-[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
 "105
-[; ;main.c: 105:         TMR1L = 0x2C;
-[e = _TMR1L -> -> 44 `i `uc ]
+[; ;main.c: 105:     if(TMR1IF)
+[e $ ! _TMR1IF 126  ]
 "106
-[; ;main.c: 106:         TMR1H = 0xCF;
-[e = _TMR1H -> -> 207 `i `uc ]
-"110
-[; ;main.c: 110:         cronometro();
-[e ( _cronometro ..  ]
-"112
-[; ;main.c: 112:         contador++;
-[e ++ _contador -> 1 `i ]
-"113
-[; ;main.c: 113:         if(contador == 100)
-[e $ ! == _contador -> 100 `i 127  ]
-"114
-[; ;main.c: 114:         {
+[; ;main.c: 106:     {
 {
-"115
-[; ;main.c: 115:             cronometro();
+"107
+[; ;main.c: 107:         PIR1bits.TMR1IF = 0;
+[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
+"108
+[; ;main.c: 108:         TMR1L = 0x95;
+[e = _TMR1L -> -> 149 `i `uc ]
+"109
+[; ;main.c: 109:         TMR1H = 0xE7;
+[e = _TMR1H -> -> 231 `i `uc ]
+"113
+[; ;main.c: 113:         cronometro();
 [e ( _cronometro ..  ]
+"115
+[; ;main.c: 115:         contador++;
+[e ++ _contador -> 1 `i ]
 "116
-[; ;main.c: 116:             inverte = ~inverte;
-[e = _inverte -> ~ -> _inverte `ui `b ]
+[; ;main.c: 116:         if(contador == 100)
+[e $ ! == _contador -> 100 `i 127  ]
 "117
-[; ;main.c: 117:             RC3 = inverte;
-[e = _RC3 _inverte ]
+[; ;main.c: 117:         {
+{
 "118
-[; ;main.c: 118:             contador = 0;
-[e = _contador -> 0 `i ]
+[; ;main.c: 118:             cronometro();
+[e ( _cronometro ..  ]
 "119
-[; ;main.c: 119:         }
+[; ;main.c: 119:             inverte = ~inverte;
+[e = _inverte -> ~ -> _inverte `ui `b ]
+"120
+[; ;main.c: 120:             RC3 = inverte;
+[e = _RC3 _inverte ]
+"121
+[; ;main.c: 121:             contador = 0;
+[e = _contador -> 0 `i ]
+"122
+[; ;main.c: 122:         }
 }
 [e :U 127 ]
-"120
-[; ;main.c: 120:     }
+"123
+[; ;main.c: 123:     }
 }
 [e :U 126 ]
-"121
-[; ;main.c: 121: }
+"124
+[; ;main.c: 124: }
 [e :UE 125 ]
 }
-"123
-[; ;main.c: 123: void setCronometro(void)
+"126
+[; ;main.c: 126: void setCronometro(void)
 [v _setCronometro `(v ~T0 @X0 1 ef ]
-"124
-[; ;main.c: 124: {
+"127
+[; ;main.c: 127: {
 {
 [e :U _setCronometro ]
 [f ]
-"125
-[; ;main.c: 125:     sprintf(buffer,"%02d:%02d:%02d", minutos, segundos, centesimos);
-[e ( _sprintf (1 , , , (. , &U _buffer :s 1C _minutos _segundos _centesimos ]
-"126
-[; ;main.c: 126:     Lcd_Set_Cursor(1,5);
-[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 5 `i `uc ]
-"127
-[; ;main.c: 127:     Lcd_Write_String(buffer);
-[e ( _Lcd_Write_String (1 &U _buffer ]
 "128
-[; ;main.c: 128: }
+[; ;main.c: 128:     sprintf(buffer,"%02d:%02d:%02d", minutos, segundos, centesimos);
+[e ( _sprintf (1 , , , (. , &U _buffer :s 1C _minutos _segundos _centesimos ]
+"129
+[; ;main.c: 129:     Lcd_Set_Cursor(1,5);
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 5 `i `uc ]
+"130
+[; ;main.c: 130:     Lcd_Write_String(buffer);
+[e ( _Lcd_Write_String (1 &U _buffer ]
+"131
+[; ;main.c: 131: }
 [e :UE 128 ]
 }
-"130
-[; ;main.c: 130: void cronometro(void)
+"133
+[; ;main.c: 133: void cronometro(void)
 [v _cronometro `(v ~T0 @X0 1 ef ]
-"131
-[; ;main.c: 131: {
+"134
+[; ;main.c: 134: {
 {
 [e :U _cronometro ]
 [f ]
-"132
-[; ;main.c: 132:     centesimos++;
-[e ++ _centesimos -> 1 `i ]
-"134
-[; ;main.c: 134:     if(centesimos == 100)
-[e $ ! == _centesimos -> 100 `i 130  ]
 "135
-[; ;main.c: 135:     {
-{
-"136
-[; ;main.c: 136:         centesimos = 0;
-[e = _centesimos -> 0 `i ]
+[; ;main.c: 135:     centesimos++;
+[e ++ _centesimos -> 1 `i ]
 "137
-[; ;main.c: 137:         segundos++;
-[e ++ _segundos -> 1 `i ]
-"139
-[; ;main.c: 139:         if(segundos == 60)
-[e $ ! == _segundos -> 60 `i 131  ]
-"140
-[; ;main.c: 140:         {
+[; ;main.c: 137:     if(centesimos == 100)
+[e $ ! == _centesimos -> 100 `i 130  ]
+"138
+[; ;main.c: 138:     {
 {
-"141
-[; ;main.c: 141:            segundos = 0;
-[e = _segundos -> 0 `i ]
+"139
+[; ;main.c: 139:         centesimos = 0;
+[e = _centesimos -> 0 `i ]
+"140
+[; ;main.c: 140:         segundos++;
+[e ++ _segundos -> 1 `i ]
 "142
-[; ;main.c: 142:            minutos++;
-[e ++ _minutos -> 1 `i ]
+[; ;main.c: 142:         if(segundos == 60)
+[e $ ! == _segundos -> 60 `i 131  ]
+"143
+[; ;main.c: 143:         {
+{
 "144
-[; ;main.c: 144:            if(minutos == 60) minutos = 0;
+[; ;main.c: 144:            segundos = 0;
+[e = _segundos -> 0 `i ]
+"145
+[; ;main.c: 145:            minutos++;
+[e ++ _minutos -> 1 `i ]
+"147
+[; ;main.c: 147:            if(minutos == 60) minutos = 0;
 [e $ ! == _minutos -> 60 `i 132  ]
 [e = _minutos -> 0 `i ]
 [e :U 132 ]
-"145
-[; ;main.c: 145:         }
+"148
+[; ;main.c: 148:         }
 }
 [e :U 131 ]
-"146
-[; ;main.c: 146:     }
+"149
+[; ;main.c: 149:     }
 }
 [e :U 130 ]
-"147
-[; ;main.c: 147: }
+"150
+[; ;main.c: 150: }
 [e :UE 129 ]
 }
 [p f _sprintf 8421508 ]

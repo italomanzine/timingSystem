@@ -33,13 +33,13 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"46 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
+"48 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"100
+"103
 [v _ContaSegundos ContaSegundos `II(v  1 e 1 0 ]
-"123
+"126
 [v _setCronometro setCronometro `(v  1 e 1 0 ]
-"130
+"133
 [v _cronometro cronometro `(v  1 e 1 0 ]
 [s S63 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
@@ -148,24 +148,24 @@
 [v _TMR1IF TMR1IF `VEb  1 e 0 @96 ]
 "358 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\doprnt.c
 [v _dpowers dpowers `DC[5]ui  1 s 10 dpowers ]
-"42 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
+"44 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
 [v _inverte inverte `b  1 e 0 0 ]
-"43
+"45
 [v _minutos minutos `i  1 e 2 0 ]
 [v _segundos segundos `i  1 e 2 0 ]
 [v _centesimos centesimos `i  1 e 2 0 ]
 [v _contador contador `i  1 e 2 0 ]
-"44
-[v _buffer buffer `[10]uc  1 e 10 0 ]
 "46
+[v _buffer buffer `[10]uc  1 e 10 0 ]
+"48
 [v _main main `(v  1 e 1 0 ]
 {
-"97
+"100
 } 0
-"123
+"126
 [v _setCronometro setCronometro `(v  1 e 1 0 ]
 {
-"128
+"131
 } 0
 "505 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
@@ -294,13 +294,13 @@
 [v Lcd_Port@a a `uc  1 a 1 2 ]
 "24
 } 0
-"100 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
+"103 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
 [v _ContaSegundos ContaSegundos `II(v  1 e 1 0 ]
 {
-"121
+"124
 } 0
-"130
+"133
 [v _cronometro cronometro `(v  1 e 1 0 ]
 {
-"147
+"150
 } 0

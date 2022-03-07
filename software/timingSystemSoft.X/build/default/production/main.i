@@ -1824,7 +1824,7 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 # 19 "main.c" 2
-# 36 "main.c"
+# 38 "main.c"
 # 1 "./lcd.h" 1
 
 
@@ -1939,7 +1939,7 @@ void Lcd_Shift_Left()
  Lcd_Cmd(0x01);
  Lcd_Cmd(0x08);
 }
-# 36 "main.c" 2
+# 38 "main.c" 2
 
 
 void setCronometro(void);
@@ -1972,8 +1972,8 @@ void main(void)
     T1CONbits.T1CKPS1 = 1;
 
 
-    TMR1L = 0x2C;
-    TMR1H = 0xCF;
+    TMR1L = 0x95;
+    TMR1H = 0xE7;
 
     T1CONbits.TMR1ON = 1;
 
@@ -1987,6 +1987,7 @@ void main(void)
 
     while(1)
     {
+        __asm("clrwdt");
         if (RB0 == 0)
         {
             RC0 = 1;
@@ -1995,7 +1996,7 @@ void main(void)
             _delay((unsigned long)((150)*(20000000/4000.0)));
             RC0 = 0;
             RC2 = 0;
-            _delay((unsigned long)((1000)*(20000000/4000.0)));
+
         }
 
         setCronometro();
@@ -2009,8 +2010,8 @@ void __attribute__((picinterrupt(("")))) ContaSegundos(void)
     if(TMR1IF)
     {
         PIR1bits.TMR1IF = 0;
-        TMR1L = 0x2C;
-        TMR1H = 0xCF;
+        TMR1L = 0x95;
+        TMR1H = 0xE7;
 
 
 
