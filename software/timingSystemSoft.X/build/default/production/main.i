@@ -1943,11 +1943,12 @@ void Lcd_Shift_Left()
 
 
 void setCronometro(void);
+void setDQ(void);
 void cronometro(void);
 void __attribute__((picinterrupt(("")))) contaSegundos(void);
 
-__bit startTimer;
-__bit inverte;
+
+
 int minutos=0, segundos=0, centesimos=0, contador=0, valor;
 char buffer[10];
 
@@ -2008,20 +2009,21 @@ void main(void)
     {
         __asm("clrwdt");
 
-        if(!RB0)
+        if(RB0 == 0)
         {
             TMR1ON = 1;
 
             RC0 = 1;
             RC2 = 1;
-
-            _delay((unsigned long)((300)*(20000000/4000.0)));
+            _delay((unsigned long)((400)*(20000000/4000.0)));
             RC0 = 0;
             RC2 = 0;
-
         }
 
-        if(!RB1) TMR1ON = 0;
+        if(RB1 == 0)
+        {
+            TMR1ON = 0;
+        }
 
         setCronometro();
 
@@ -2033,10 +2035,17 @@ void main(void)
         _delay((unsigned long)((10)*(20000000/4000000.0)));
         valor = ADRESH;
 
-        if(valor == 0)
-            RC3 = 1;
-        else
+
+        if(valor != 0)
+        {
             RC3 = 0;
+        }
+        else if (valor == 0 && segundos < 3)
+        {
+            RC3 = 1;
+            setDQ();
+        }
+
     }
 
     return;
@@ -2067,6 +2076,13 @@ void setCronometro(void)
 {
     sprintf(buffer,"1-      %02d:%02d:%02d", minutos, segundos, centesimos);
     Lcd_Set_Cursor(1,1);
+    Lcd_Write_String(buffer);
+}
+
+void setDQ(void)
+{
+    sprintf(buffer,"Atleta Desclassificado");
+    Lcd_Set_Cursor(2,1);
     Lcd_Write_String(buffer);
 }
 

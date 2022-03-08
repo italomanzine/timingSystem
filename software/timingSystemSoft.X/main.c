@@ -18,16 +18,16 @@
 #include <pic16f877a.h>
 #include <stdio.h>
 
-#define _XTAL_FREQ 20000000 // define a frequencia do clock em 20MHz
+#define _XTAL_FREQ 20000000 // define a frequencia do clock em 20MHz ***********
 
-// Definindo entradas e saídas
+// Definindo entradas e saídas *************************************************
 #define START RB0
 #define FINISH_LINE RB1
 #define LIGHT RC0
 #define BUZZER RC2
-#define LED_AD RC3
+#define LED_REACTION RC3
 
-// define pinos referentes a interface com LCD
+// define pinos referentes a interface com LCD *********************************
 #define RS RD2
 #define EN RD3
 #define D4 RD4
@@ -38,11 +38,12 @@
 #include "lcd.h" // biblioteca do lcd
 
 void setCronometro(void);
+void setDQ(void);
 void cronometro(void);
 void __interrupt() contaSegundos(void);
 
-__bit startTimer;
-__bit inverte;
+//__bit startTimer;
+//__bit inverte;
 int minutos=0, segundos=0, centesimos=0, contador=0, valor;
 char buffer[10];
 
@@ -78,7 +79,7 @@ void main(void)
     ADCON1bits.PCFG2 = 1;
     ADCON1bits.PCFG3 = 1;
     
-    // define o clock de conversão
+    // define o clock de conversão *********************************************
     ADCON0bits.ADCS0 = 0;
     ADCON0bits.ADCS1 = 0;
     
@@ -92,7 +93,7 @@ void main(void)
     // Inicialializando saídas *************************************************
     LIGHT = 0;
     BUZZER = 0;
-    LED_AD = 0;
+    LED_REACTION = 0;
     
     // Inicialializando o LCD *************************************************
     Lcd_Init();                 // Inicia módulo LCD
@@ -103,20 +104,21 @@ void main(void)
     {
         CLRWDT();
         
-        if(!START)
+        if(START == 0)
         {
             TMR1ON = 1;
             
             LIGHT = 1;
             BUZZER = 1;
-            //setCronometro();
-            __delay_ms(300);
+            __delay_ms(400);
             LIGHT = 0;
             BUZZER = 0;
-            //__delay_ms(1000);
         }
         
-        if(!FINISH_LINE) TMR1ON = 0;
+        if(FINISH_LINE == 0) 
+        {
+            TMR1ON = 0;
+        }
         
         setCronometro();
         
@@ -128,10 +130,17 @@ void main(void)
         __delay_us(10);
         valor = ADRESH;
         
-        if(valor == 0)
-            LED_AD = 1;
-        else
-            LED_AD = 0;
+        // Neste caso verifica se o atleta queimou a largada e foi desclassificado
+        if(valor != 0)
+        {   
+            LED_REACTION = 0;
+        }
+        else if (valor == 0 && segundos < 3)
+        {
+            LED_REACTION = 1;
+            setDQ();
+        }
+        
     }
     
     return;
@@ -148,7 +157,7 @@ void __interrupt() ContaSegundos(void)
 
         // Comandos para tratar a interrupção
         cronometro();
-        ///* teoricamente quando o contador chegasse em 100 passaria 1 segundo
+        // Teoricamente quando o contador chegasse em 100 passaria 1 segundo
         contador++;
         if(contador == 100)
         {
@@ -162,6 +171,13 @@ void setCronometro(void)
 {
     sprintf(buffer,"1-      %02d:%02d:%02d", minutos, segundos, centesimos);    //Armazena em buffer os conteúdos de tempo
     Lcd_Set_Cursor(1,1);        // Põe cursor na linha 1 coluna 1
+    Lcd_Write_String(buffer);   // Escreve o conteúdo de buffer no LCD
+}
+
+void setDQ(void)
+{
+    sprintf(buffer,"Atleta DQ");    //Armazena em buffer os conteúdos de tempo
+    Lcd_Set_Cursor(2,1);        // Põe cursor na linha 1 coluna 1
     Lcd_Write_String(buffer);   // Escreve o conteúdo de buffer no LCD
 }
 
