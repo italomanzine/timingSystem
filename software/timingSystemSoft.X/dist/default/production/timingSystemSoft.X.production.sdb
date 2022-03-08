@@ -7,6 +7,8 @@
 [v _Lcd_Port Lcd_Port `(v  1 e 1 0 ]
 "25
 [v _Lcd_Cmd Lcd_Cmd `(v  1 e 1 0 ]
+"34
+[v _Lcd_Clear Lcd_Clear `(i  1 e 2 0 ]
 "40
 [v _Lcd_Set_Cursor Lcd_Set_Cursor `(v  1 e 1 0 ]
 "61
@@ -35,11 +37,11 @@
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
 "48 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"103
+"106
 [v _ContaSegundos ContaSegundos `II(v  1 e 1 0 ]
-"126
+"129
 [v _setCronometro setCronometro `(v  1 e 1 0 ]
-"133
+"136
 [v _cronometro cronometro `(v  1 e 1 0 ]
 [s S63 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
@@ -160,12 +162,12 @@
 "48
 [v _main main `(v  1 e 1 0 ]
 {
-"100
+"103
 } 0
-"126
+"129
 [v _setCronometro setCronometro `(v  1 e 1 0 ]
 {
-"131
+"134
 } 0
 "505 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c90\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
@@ -276,6 +278,11 @@
 {
 "78
 } 0
+"34
+[v _Lcd_Clear Lcd_Clear `(i  1 e 2 0 ]
+{
+"38
+} 0
 "25
 [v _Lcd_Cmd Lcd_Cmd `(v  1 e 1 0 ]
 {
@@ -294,13 +301,13 @@
 [v Lcd_Port@a a `uc  1 a 1 2 ]
 "24
 } 0
-"103 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
+"106 D:\Microprocessadores e Microcontroladores\timingSystem\software\timingSystemSoft.X\main.c
 [v _ContaSegundos ContaSegundos `II(v  1 e 1 0 ]
 {
-"124
+"127
 } 0
-"133
+"136
 [v _cronometro cronometro `(v  1 e 1 0 ]
 {
-"150
+"153
 } 0

@@ -77,7 +77,9 @@ void main(void)
     BUZZER = 0;
     LED = 0;
     
-    Lcd_Init();
+    // Inicialializando o LCD *************************************************
+    Lcd_Init();                 // Inicia módulo LCD
+    Lcd_Clear();                // Limpa display
     
     // loop principal
     while(1)
@@ -125,9 +127,9 @@ void __interrupt() ContaSegundos(void)
 
 void setCronometro(void)
 {
-    sprintf(buffer,"%02d:%02d:%02d", minutos, segundos, centesimos);
-    Lcd_Set_Cursor(1,5);
-    Lcd_Write_String(buffer);
+    sprintf(buffer,"1-      %02d:%02d:%02d", minutos, segundos, centesimos);    //Armazena em buffer os conteúdos de tempo
+    Lcd_Set_Cursor(1,1);        // Põe cursor na linha 1 coluna 1
+    Lcd_Write_String(buffer);   // Escreve o conteúdo de buffer no LCD
 }
 
 void cronometro(void)

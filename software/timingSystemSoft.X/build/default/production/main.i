@@ -1982,7 +1982,10 @@ void main(void)
     RC2 = 0;
     RC3 = 0;
 
+
     Lcd_Init();
+    Lcd_Clear();
+
 
 
     while(1)
@@ -2030,8 +2033,8 @@ void __attribute__((picinterrupt(("")))) ContaSegundos(void)
 
 void setCronometro(void)
 {
-    sprintf(buffer,"%02d:%02d:%02d", minutos, segundos, centesimos);
-    Lcd_Set_Cursor(1,5);
+    sprintf(buffer,"1-      %02d:%02d:%02d", minutos, segundos, centesimos);
+    Lcd_Set_Cursor(1,1);
     Lcd_Write_String(buffer);
 }
 
