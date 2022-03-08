@@ -1946,8 +1946,9 @@ void setCronometro(void);
 void cronometro(void);
 void __attribute__((picinterrupt(("")))) contaSegundos(void);
 
+__bit startTimer;
 __bit inverte;
-int minutos=0, segundos=0, centesimos=0, contador=0;
+int minutos=0, segundos=0, centesimos=0, contador=0, valor;
 char buffer[10];
 
 void main(void)
@@ -1959,7 +1960,6 @@ void main(void)
 
 
     OPTION_REGbits.nRBPU = 0;
-
 
 
     INTCONbits.GIE = 1;
@@ -1975,7 +1975,24 @@ void main(void)
     TMR1L = 0x95;
     TMR1H = 0xE7;
 
-    T1CONbits.TMR1ON = 1;
+    T1CONbits.TMR1ON = 0;
+
+
+    ADCON1bits.PCFG0 = 0;
+    ADCON1bits.PCFG1 = 1;
+    ADCON1bits.PCFG2 = 1;
+    ADCON1bits.PCFG3 = 1;
+
+
+    ADCON0bits.ADCS0 = 0;
+    ADCON0bits.ADCS1 = 0;
+
+    ADCON1bits.ADFM = 0;
+
+    ADRESL = 0x00;
+    ADRESH = 0x00;
+
+    ADCON0bits.ADON = 1;
 
 
     RC0 = 0;
@@ -1987,23 +2004,41 @@ void main(void)
     Lcd_Clear();
 
 
-
     while(1)
     {
         __asm("clrwdt");
-        if (RB0 == 0)
+
+        if(!RB0)
         {
+            TMR1ON = 1;
+
             RC0 = 1;
             RC2 = 1;
 
-            _delay((unsigned long)((150)*(20000000/4000.0)));
+            _delay((unsigned long)((300)*(20000000/4000.0)));
             RC0 = 0;
             RC2 = 0;
 
         }
 
+        if(!RB1) TMR1ON = 0;
+
         setCronometro();
+
+        ADCON0bits.CHS0 = 0;
+        ADCON0bits.CHS1 = 0;
+        ADCON0bits.CHS2 = 0;
+
+        ADCON0bits.GO = 1;
+        _delay((unsigned long)((10)*(20000000/4000000.0)));
+        valor = ADRESH;
+
+        if(valor == 0)
+            RC3 = 1;
+        else
+            RC3 = 0;
     }
+
     return;
 }
 
@@ -2017,15 +2052,12 @@ void __attribute__((picinterrupt(("")))) ContaSegundos(void)
         TMR1H = 0xE7;
 
 
-
         cronometro();
 
         contador++;
         if(contador == 100)
         {
             cronometro();
-            inverte = ~inverte;
-            RC3 = inverte;
             contador = 0;
         }
     }

@@ -25,7 +25,7 @@
 #define FINISH_LINE RB1
 #define LIGHT RC0
 #define BUZZER RC2
-#define LED RC3
+#define LED_AD RC3
 
 // define pinos referentes a interface com LCD
 #define RS RD2
@@ -41,8 +41,9 @@ void setCronometro(void);
 void cronometro(void);
 void __interrupt() contaSegundos(void);
 
+__bit startTimer;
 __bit inverte;
-int minutos=0, segundos=0, centesimos=0, contador=0;
+int minutos=0, segundos=0, centesimos=0, contador=0, valor;
 char buffer[10];
 
 void main(void)
@@ -54,7 +55,6 @@ void main(void)
     
     // resistores Pull-up ativados *********************************************
     OPTION_REGbits.nRBPU = 0;
-    
     
     // Configurando interrupções ***********************************************
     INTCONbits.GIE = 1;    // habilita int global
@@ -70,12 +70,29 @@ void main(void)
     TMR1L = 0x95;           // Carga inicial no contador (65536 - 6250)
     TMR1H = 0xE7;           // 59285. Quando estourar contou 6250, passou 0.1s
     
-    T1CONbits.TMR1ON = 1;   // Liga o TIMER 1
+    T1CONbits.TMR1ON = 0;   // Liga o TIMER 1
+    
+    // Configura conversor A/D *************************************************
+    ADCON1bits.PCFG0 = 0;
+    ADCON1bits.PCFG1 = 1;
+    ADCON1bits.PCFG2 = 1;
+    ADCON1bits.PCFG3 = 1;
+    
+    // define o clock de conversão
+    ADCON0bits.ADCS0 = 0;
+    ADCON0bits.ADCS1 = 0;
+    
+    ADCON1bits.ADFM = 0;
+    
+    ADRESL = 0x00;
+    ADRESH = 0x00;
+    
+    ADCON0bits.ADON = 1;
     
     // Inicialializando saídas *************************************************
     LIGHT = 0;
     BUZZER = 0;
-    LED = 0;
+    LED_AD = 0;
     
     // Inicialializando o LCD *************************************************
     Lcd_Init();                 // Inicia módulo LCD
@@ -85,19 +102,38 @@ void main(void)
     while(1)
     {
         CLRWDT();
-        if (START == 0)
+        
+        if(!START)
         {
+            TMR1ON = 1;
+            
             LIGHT = 1;
             BUZZER = 1;
             //setCronometro();
-            __delay_ms(150);
+            __delay_ms(300);
             LIGHT = 0;
             BUZZER = 0;
             //__delay_ms(1000);
         }
         
+        if(!FINISH_LINE) TMR1ON = 0;
+        
         setCronometro();
+        
+        ADCON0bits.CHS0 = 0;
+        ADCON0bits.CHS1 = 0;
+        ADCON0bits.CHS2 = 0;
+
+        ADCON0bits.GO = 1;
+        __delay_us(10);
+        valor = ADRESH;
+        
+        if(valor == 0)
+            LED_AD = 1;
+        else
+            LED_AD = 0;
     }
+    
     return;
 }
 
@@ -109,8 +145,7 @@ void __interrupt() ContaSegundos(void)
         PIR1bits.TMR1IF = 0;    // Reseta o flag da interrupção
         TMR1L = 0x95;           // Reinicia a contagem com 59285
         TMR1H = 0xE7;           // 
-        
-        
+
         // Comandos para tratar a interrupção
         cronometro();
         ///* teoricamente quando o contador chegasse em 100 passaria 1 segundo
@@ -118,8 +153,6 @@ void __interrupt() ContaSegundos(void)
         if(contador == 100)
         {
             cronometro();
-            inverte = ~inverte;
-            LED = inverte;
             contador = 0;
         }
     }
