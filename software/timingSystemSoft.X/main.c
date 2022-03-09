@@ -23,6 +23,7 @@
 // Definindo entradas e saídas *************************************************
 #define START RB0
 #define FINISH_LINE RB1
+#define RESET RB2
 #define LIGHT RC0
 #define BUZZER RC2
 #define LED_REACTION RC3
@@ -104,6 +105,7 @@ void main(void)
     {
         CLRWDT();
         
+        // Inicia a largada
         if(START == 0)
         {
             TMR1ON = 1;
@@ -115,11 +117,13 @@ void main(void)
             BUZZER = 0;
         }
         
+        // Atleta ativa o sensor de chegada
         if(FINISH_LINE == 0) 
         {
             TMR1ON = 0;
         }
         
+        // Mostra o Placar LCD
         setCronometro();
         
         ADCON0bits.CHS0 = 0;
@@ -139,6 +143,20 @@ void main(void)
         {
             LED_REACTION = 1;
             setDQ();
+        }
+        
+        // Reinicia o sistema
+        if(RESET == 0)
+        {
+            TMR1ON = 0;
+            LED_REACTION = 0;
+            LIGHT = 0;
+            BUZZER = 0;
+            centesimos = 0;
+            segundos = 0;
+            minutos = 0;
+            Lcd_Clear();
+            setCronometro();
         }
         
     }

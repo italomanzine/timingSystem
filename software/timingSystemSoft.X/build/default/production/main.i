@@ -1824,7 +1824,7 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 # 19 "main.c" 2
-# 38 "main.c"
+# 39 "main.c"
 # 1 "./lcd.h" 1
 
 
@@ -1939,7 +1939,7 @@ void Lcd_Shift_Left()
  Lcd_Cmd(0x01);
  Lcd_Cmd(0x08);
 }
-# 38 "main.c" 2
+# 39 "main.c" 2
 
 
 void setCronometro(void);
@@ -2009,6 +2009,7 @@ void main(void)
     {
         __asm("clrwdt");
 
+
         if(RB0 == 0)
         {
             TMR1ON = 1;
@@ -2020,10 +2021,12 @@ void main(void)
             RC2 = 0;
         }
 
+
         if(RB1 == 0)
         {
             TMR1ON = 0;
         }
+
 
         setCronometro();
 
@@ -2044,6 +2047,20 @@ void main(void)
         {
             RC3 = 1;
             setDQ();
+        }
+
+
+        if(RB2 == 0)
+        {
+            TMR1ON = 0;
+            RC3 = 0;
+            RC0 = 0;
+            RC2 = 0;
+            centesimos = 0;
+            segundos = 0;
+            minutos = 0;
+            Lcd_Clear();
+            setCronometro();
         }
 
     }
@@ -2081,7 +2098,7 @@ void setCronometro(void)
 
 void setDQ(void)
 {
-    sprintf(buffer,"Atleta Desclassificado");
+    sprintf(buffer,"Atleta DQ");
     Lcd_Set_Cursor(2,1);
     Lcd_Write_String(buffer);
 }
