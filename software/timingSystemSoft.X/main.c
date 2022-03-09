@@ -9,10 +9,10 @@
 
 // PIC16F877A Configuration Bit Settings
 // CONFIG
-#pragma config FOSC = HS        // Oscillator Selection bits (XT oscillator)
-#pragma config WDTE = ON        // Watchdog Timer Enable bit (WDT enabled)
-#pragma config PWRTE = ON      // Power-up Timer Enable bit (PWRT disabled)
-#pragma config BOREN = ON       // Brown-out Reset Enable bit (BOR enabled)
+#pragma config FOSC = HS    // Oscillator Selection bits (XT oscillator)
+#pragma config WDTE = ON    // Watchdog Timer Enable bit (WDT enabled)
+#pragma config PWRTE = ON   // Power-up Timer Enable bit (PWRT disabled)
+#pragma config BOREN = ON   // Brown-out Reset Enable bit (BOR enabled)
 
 #include <xc.h>  // biblioteca compilador XC8
 #include <pic16f877a.h>
@@ -25,8 +25,8 @@
 #define FINISH_LINE RB1
 #define RESET RB2
 #define LIGHT RC0
-#define BUZZER RC2
-#define LED_REACTION RC3
+#define BUZZER RC4
+#define LED_REACTION RC7
 
 // define pinos referentes a interface com LCD *********************************
 #define RS RD2
@@ -43,8 +43,6 @@ void setDQ(void);
 void cronometro(void);
 void __interrupt() contaSegundos(void);
 
-//__bit startTimer;
-//__bit inverte;
 int minutos=0, segundos=0, centesimos=0, contador=0, valor;
 char buffer[10];
 
