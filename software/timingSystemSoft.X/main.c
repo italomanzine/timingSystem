@@ -9,10 +9,10 @@
 
 // PIC16F877A Configuration Bit Settings
 // CONFIG
-#pragma config FOSC = HS        // Oscillator Selection bits (XT oscillator)
-#pragma config WDTE = ON        // Watchdog Timer Enable bit (WDT enabled)
-#pragma config PWRTE = ON      // Power-up Timer Enable bit (PWRT disabled)
-#pragma config BOREN = ON       // Brown-out Reset Enable bit (BOR enabled)
+#pragma config FOSC = HS    // Oscillator Selection bits (XT oscillator)
+#pragma config WDTE = ON    // Watchdog Timer Enable bit (WDT enabled)
+#pragma config PWRTE = ON   // Power-up Timer Enable bit (PWRT disabled)
+#pragma config BOREN = ON   // Brown-out Reset Enable bit (BOR enabled)
 
 #include <xc.h>  // biblioteca compilador XC8
 #include <pic16f877a.h>
@@ -25,10 +25,10 @@
 #define FINISH_LINE RB1
 #define RESET RB2
 #define LIGHT RC0
-#define BUZZER RC2
-#define LED_REACTION RC3
+#define BUZZER RC4
+#define LED_REACTION RC7
 
-// define pinos referentes a interface com LCD *********************************
+// Define pinos referentes a interface com LCD *********************************
 #define RS RD2
 #define EN RD3
 #define D4 RD4
@@ -36,32 +36,30 @@
 #define D6 RD6
 #define D7 RD7
 
-#include "lcd.h" // biblioteca do lcd
+#include "lcd.h"    // Biblioteca do lcd
 
 void setCronometro(void);
 void setDQ(void);
 void cronometro(void);
 void __interrupt() contaSegundos(void);
 
-//__bit startTimer;
-//__bit inverte;
 int minutos=0, segundos=0, centesimos=0, contador=0, valor;
 char buffer[10];
 
 void main(void)
 {   
-    // inicialização das portas todas em saída *********************************
-    TRISB = 0b11111111; //PORT B em entrada
-    TRISC = 0b00000000; //PORT C em saída
-    TRISD = 0b00000000; //PORT D em saída
+    // Inicialização das portas todas em saída *********************************
+    TRISB = 0b11111111;     //PORT B em entrada
+    TRISC = 0b00000000;     //PORT C em saída
+    TRISD = 0b00000000;     //PORT D em saída
     
-    // resistores Pull-up ativados *********************************************
+    // Resistores Pull-up ativados *********************************************
     OPTION_REGbits.nRBPU = 0;
     
     // Configurando interrupções ***********************************************
-    INTCONbits.GIE = 1;    // habilita int global
-    INTCONbits.PEIE = 1;   // habilita int dos perifericos
-    PIE1bits.TMR1IE = 1;   // habilita int do timer1
+    INTCONbits.GIE = 1;     // habilita int global
+    INTCONbits.PEIE = 1;    // habilita int dos perifericos
+    PIE1bits.TMR1IE = 1;    // habilita int do timer1
     
     // Configurando o TIMER 1 **************************************************
     T1CONbits.TMR1CS = 0;   // Define o timer1 como temporizador (FOSC/4)
@@ -80,7 +78,7 @@ void main(void)
     ADCON1bits.PCFG2 = 1;
     ADCON1bits.PCFG3 = 1;
     
-    // define o clock de conversão *********************************************
+    // Define o clock de conversão *********************************************
     ADCON0bits.ADCS0 = 0;
     ADCON0bits.ADCS1 = 0;
     
@@ -97,10 +95,10 @@ void main(void)
     LED_REACTION = 0;
     
     // Inicialializando o LCD *************************************************
-    Lcd_Init();                 // Inicia módulo LCD
-    Lcd_Clear();                // Limpa display
+    Lcd_Init();
+    Lcd_Clear();
     
-    // loop principal
+    // Loop principal
     while(1)
     {
         CLRWDT();
@@ -126,10 +124,12 @@ void main(void)
         // Mostra o Placar LCD
         setCronometro();
         
+        // Configura os canais que são entradas analógicas
         ADCON0bits.CHS0 = 0;
         ADCON0bits.CHS1 = 0;
         ADCON0bits.CHS2 = 0;
 
+        // Faz a conversão de analógico para digital e armazena na variável valor
         ADCON0bits.GO = 1;
         __delay_us(10);
         valor = ADRESH;
@@ -158,7 +158,6 @@ void main(void)
             Lcd_Clear();
             setCronometro();
         }
-        
     }
     
     return;
@@ -171,7 +170,7 @@ void __interrupt() ContaSegundos(void)
     {
         PIR1bits.TMR1IF = 0;    // Reseta o flag da interrupção
         TMR1L = 0x95;           // Reinicia a contagem com 59285
-        TMR1H = 0xE7;           // 
+        TMR1H = 0xE7; 
 
         // Comandos para tratar a interrupção
         cronometro();
@@ -195,8 +194,8 @@ void setCronometro(void)
 void setDQ(void)
 {
     sprintf(buffer,"Atleta DQ");    //Armazena em buffer os conteúdos de tempo
-    Lcd_Set_Cursor(2,1);        // Põe cursor na linha 1 coluna 1
-    Lcd_Write_String(buffer);   // Escreve o conteúdo de buffer no LCD
+    Lcd_Set_Cursor(2,1);            // Põe cursor na linha 1 coluna 1
+    Lcd_Write_String(buffer);       // Escreve o conteúdo de buffer no LCD
 }
 
 void cronometro(void)
