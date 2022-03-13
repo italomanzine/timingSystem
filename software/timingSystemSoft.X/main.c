@@ -174,13 +174,6 @@ void __interrupt() ContaSegundos(void)
 
         // Comandos para tratar a interrupção
         cronometro();
-        // Teoricamente quando o contador chegasse em 100 passaria 1 segundo
-        contador++;
-        if(contador == 100)
-        {
-            cronometro();
-            contador = 0;
-        }
     }
 }
 
